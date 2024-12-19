@@ -8,19 +8,19 @@ type HandleInputChange = ReturnType<typeof useChat>["handleInputChange"];
 type HandleSubmit = ReturnType<typeof useChat>["handleSubmit"];
 type SetInput = ReturnType<typeof useChat>["setInput"];
 
-interface ChatInputProps {
+interface NewChatInputProps {
   input: string;
   handleInputChange: HandleInputChange;
   handleSubmit: HandleSubmit;
   setInput: SetInput;
 }
 
-export const ChatInput = ({
+export const NewChatInput = ({
   handleInputChange,
   handleSubmit,
   input,
   setInput,
-}: ChatInputProps) => {
+}: NewChatInputProps) => {
   return (
     <div className="z-10 bg-zinc-800 absolute bottom-0 left-0 w-full">
       <div className="mx-2 flex flex-row gap-3 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
@@ -59,7 +59,7 @@ export const ChatInput = ({
               <Button
                 size="sm"
                 type="submit"
-                className="shadow-current shadow-sm absolute z-10 border bg-violet-950 border-violet-700 right-2 bottom-2"
+                className="animate-bounce shadow-current shadow-sm absolute z-10 border bg-violet-950 border-violet-700 right-2 bottom-2"
               >
                 <Send className="size-4" />
               </Button>

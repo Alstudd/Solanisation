@@ -1,11 +1,11 @@
 "use client";
 
 import { Message, useChat } from "ai/react";
-import { Messages } from "./Messages";
-import { ChatInput } from "./ChatInput";
+import { NewChatInput } from "./NewChatInput";
 import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
+import { Bot } from "lucide-react";
 
 const NewChatMainWrapper = ({
   sessionId,
@@ -67,15 +67,31 @@ const NewChatMainWrapper = ({
       <Sidebar sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
-          <Messages messages={messages} />
+        <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">
+          <div className="shadow-current shadow-sm size-20 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center mb-5">
+            <Bot className="size-12 text-white" />
+          </div>
+          <h1 className="text-white text-2xl font-bold">
+            Welcome to Solana GPT
+          </h1>
+          <p className="text-white text-lg mt-2 text-center">
+            Solana GPT is a conversational AI that can help you with your
+            Solana-related queries.
+          </p>
+          <p className="text-white text-lg mt-2 text-center">
+            You can ask questions about Solana, get the latest Solana price, and
+            more.
+          </p>
+          <p className="text-white text-lg mt-2 text-center">
+            To get started, type a message in the chat box below.
+          </p>
         </div>
-        {/* <ChatInput
+        <NewChatInput
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setInput={setInput}
-        /> */}
+        />
       </div>
     </div>
   );
