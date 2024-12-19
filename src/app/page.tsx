@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs/server'
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -20,9 +20,11 @@ export default async function Home() {
         Welcome to Solana GPT, a chatbot that can help you with Solana-related
         questions. Click the button below to start chatting.
       </p>
-      <button className="bg-black rounded-md text-white px-4 py-2">
-        <Link href="/sign-in">Login</Link>
-      </button>
+      <Link href="/sign-in">
+        <button className="bg-black rounded-md text-white px-4 py-2">
+          Login
+        </button>
+      </Link>
     </main>
   );
 }

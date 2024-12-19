@@ -5,6 +5,7 @@ import { Messages } from "./Messages";
 import { ChatInput } from "./ChatInput";
 import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
+import { useEffect, useState } from "react";
 
 const MainWrapper = ({
   sessionId,
@@ -19,11 +20,18 @@ const MainWrapper = ({
       body: { sessionId },
       initialMessages,
     });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const width = window.innerWidth;
+    setIsOpen(width > 768);
+  }, []);
   return (
     <div className="flex min-h-full">
-      <Sidebar />
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="w-full relative bg-zinc-900 flex divide-y divide-zinc-700 flex-col justify-between">
-        <ChatNav />
+        <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
           <Messages messages={messages} />
         </div>

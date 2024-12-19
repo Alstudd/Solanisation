@@ -10,9 +10,10 @@ const Page = async () => {
   if (!userId) redirect("/");
   const sessionId = "8c9e9625-f495-48eb-85dd-4aea54243db4";
   // const sessionId = String((await cookies()).get("sessionId")?.value);
+  // const url = "https://solana.com/docs/rpc/http/gettokenaccountbalance";
   // const isSolanaDocsUrlAlreadyIndexed = await redis.sismember(
   //   "indexed-urls",
-  //   "https://solana.com/docs"
+  //   url
   // );
   const initialMessages = await ragChat.history.getMessages({
     amount: 100,
@@ -22,10 +23,10 @@ const Page = async () => {
   // if (!isSolanaDocsUrlAlreadyIndexed) {
   //   await ragChat.context.add({
   //     type: "html",
-  //     source: "https://solana.com/docs",
+  //     source: url,
   //     // config: { chunkOverlap: 50, chunkSize: 200 },
   //   });
-  //   await redis.sadd("indexed-urls", "https://solana.com/docs");
+  //   await redis.sadd("indexed-urls", url);
   // }
   return (
     <div className="h-screen dark text-foreground bg-background">
