@@ -22,12 +22,23 @@ export const ChatInput = ({
   setInput,
 }: ChatInputProps) => {
   return (
-    <div className="z-10 bg-zinc-900/70 absolute bottom-0 left-0 w-full">
+    <div className="z-10 bg-zinc-800 absolute bottom-0 left-0 w-full">
       <div className="mx-2 flex flex-row gap-3 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
         <div className="relative flex h-full flex-1 items-stretch md:flex-col">
           <div className="relative flex flex-col w-full flex-grow p-4">
             <form onSubmit={handleSubmit} className="relative">
               <Textarea
+              classNames={{
+                inputWrapper: [
+                  "shadow-xl",
+                  "bg-zinc-900",
+                  "backdrop-blur-xl",
+                  "backdrop-saturate-200",
+                  "hover:bg-zinc-900",
+                  "group-data-[focus=true]:bg-zinc-900",
+                  "!cursor-text",
+                ],
+              }}
                 minRows={4}
                 autoFocus
                 onChange={handleInputChange}

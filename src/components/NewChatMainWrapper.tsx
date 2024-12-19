@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
 
-const MainWrapper = ({
+const NewChatMainWrapper = ({
   sessionId,
   initialMessages,
 }: {
@@ -70,15 +70,15 @@ const MainWrapper = ({
         <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
           <Messages messages={messages} />
         </div>
-        <ChatInput
+        {/* <ChatInput
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setInput={setInput}
-        />
+        /> */}
       </div>
     </div>
   );
 };
 
-export default MainWrapper;
+export default NewChatMainWrapper;

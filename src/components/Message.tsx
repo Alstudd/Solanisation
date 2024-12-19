@@ -12,8 +12,8 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
   return (
     <div
       className={cn({
-        "bg-zinc-800": isUserMessage,
-        "bg-zinc-900/25": !isUserMessage,
+        "bg-zinc-800": true,
+        // "bg-zinc-800": !isUserMessage,
       })}
     >
       <div className="p-6">
