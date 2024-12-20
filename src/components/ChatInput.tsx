@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Textarea } from "@nextui-org/react";
-import { Send } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import { type useChat } from "ai/react";
 
 type HandleInputChange = ReturnType<typeof useChat>["handleInputChange"];
@@ -13,6 +13,8 @@ interface ChatInputProps {
   handleInputChange: HandleInputChange;
   handleSubmit: HandleSubmit;
   setInput: SetInput;
+  isLoading: boolean;
+  type: "chat" | "newChat";
 }
 
 export const ChatInput = ({
@@ -20,6 +22,8 @@ export const ChatInput = ({
   handleSubmit,
   input,
   setInput,
+  isLoading,
+  type,
 }: ChatInputProps) => {
   return (
     <div className="z-10 bg-zinc-800 absolute bottom-0 left-0 w-full">
@@ -54,14 +58,20 @@ export const ChatInput = ({
                 }}
                 placeholder="Enter your question..."
                 className="resize-none rounded-xl text-base shadow-current shadow-sm"
+                disabled={isLoading}
               />
 
               <Button
                 size="sm"
                 type="submit"
-                className="shadow-current shadow-sm absolute z-10 border bg-violet-950 border-violet-700 right-2 bottom-2"
+                disabled={isLoading}
+                className={`${type === "newChat" && "animate-bounce"} shadow-current shadow-sm absolute z-10 border bg-violet-950 border-violet-700 right-2 bottom-2`}
               >
-                <Send className="size-4" />
+                {isLoading ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Send className="size-4" />
+                )}
               </Button>
             </form>
           </div>

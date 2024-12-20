@@ -1,29 +1,64 @@
 "use client";
 
-import { Message, useChat } from "ai/react";
-import { NewChatInput } from "./NewChatInput";
+import { useChat } from "ai/react";
+import { ChatInput } from "./ChatInput";
 import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
 import { Bot } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Messages } from "./Messages";
 
-const NewChatMainWrapper = ({
-  sessionId,
-  initialMessages,
-}: {
-  sessionId: string;
-  initialMessages: Message[];
-}) => {
-  const { messages, handleInputChange, input, setInput, handleSubmit } =
-    useChat({
-      api: "/api/chatStream",
-      body: { sessionId },
-      initialMessages,
-    });
+const NewChatMainWrapper = () => {
+  const { messages, handleInputChange, input, setInput } = useChat({
+    api: "/api/chatStream",
+    body: {
+      chatId: null,
+    },
+  });
 
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState<number>(0);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+
+  const handleSubmit = async (e?: any) => {
+    if (e) e.preventDefault();
+    if (!input.trim()) return;
+    let tempInput = input;
+    setIsLoading(true);
+
+    try {
+      setInput("");
+      const response = await fetch("/api/chatStream", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [tempInput],
+          chatId: null,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Error:", error.error);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.redirectUrl) {
+        router.push(data.redirectUrl);
+      }
+    } catch (error) {
+      console.error("Error submitting chat:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -67,7 +102,7 @@ const NewChatMainWrapper = ({
       <Sidebar sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">
+        {/* <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">
           <div className="shadow-current shadow-sm size-20 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center mb-5">
             <Bot className="size-12 text-white" />
           </div>
@@ -85,12 +120,17 @@ const NewChatMainWrapper = ({
           <p className="text-white text-lg mt-2 text-center">
             To get started, type a message in the chat box below.
           </p>
+        </div> */}
+        <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
+          <Messages messages={[]} />
         </div>
-        <NewChatInput
+        <ChatInput
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setInput={setInput}
+          isLoading={isLoading}
+          type={"newChat"}
         />
       </div>
     </div>

@@ -7,6 +7,24 @@ import {
 } from "@/lib/validation/chat";
 import { auth } from "@clerk/nextjs/server";
 
+export async function GET() {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const chats = await prisma.chat.findMany({
+      where: { userId },
+      include: { messages: true },
+    });
+
+    return NextResponse.json(chats, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -61,9 +79,18 @@ export async function DELETE(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await prisma.chat.delete({
-      where: { id },
-    });
+    await prisma.$transaction([
+      prisma.message.deleteMany({
+        where: { chatId: id },
+      }),
+      prisma.chat.delete({
+        where: { id },
+      }),
+    ]);
+
+    // await prisma.chat.delete({
+    //   where: { id },
+    // });
 
     return NextResponse.json(
       { message: "Chat deleted successfully" },

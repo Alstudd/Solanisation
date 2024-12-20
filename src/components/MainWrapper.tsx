@@ -6,20 +6,24 @@ import { ChatInput } from "./ChatInput";
 import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
-
+import { Chat, Message as MessageModel } from "@prisma/client";
 const MainWrapper = ({
-  sessionId,
+  chat,
   initialMessages,
 }: {
-  sessionId: string;
+  chat: Chat & { messages: MessageModel[] };
   initialMessages: Message[];
 }) => {
-  const { messages, handleInputChange, input, setInput, handleSubmit } =
+  const { messages, handleInputChange, input, setInput, handleSubmit, isLoading } =
     useChat({
       api: "/api/chatStream",
-      body: { sessionId },
+      body: {
+        chatId: chat.id,
+      },
       initialMessages,
     });
+
+  console.log(messages);
 
   const [isOpen, setIsOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState<number>(0);
@@ -75,6 +79,8 @@ const MainWrapper = ({
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setInput={setInput}
+          isLoading={isLoading}
+          type={"chat"}
         />
       </div>
     </div>

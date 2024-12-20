@@ -1,4 +1,11 @@
-import { PanelLeftCloseIcon, PlusIcon, MoreVerticalIcon } from "lucide-react";
+import { Chat } from "@prisma/client";
+import {
+  PanelLeftCloseIcon,
+  PlusIcon,
+  MoreVerticalIcon,
+  BarChart,
+} from "lucide-react";
+import { redirect } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 
 const Sidebar = ({
@@ -10,14 +17,21 @@ const Sidebar = ({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) => {
-  const [chats, setChats] = useState([
-    { id: 1, title: "Chat 1" },
-    { id: 2, title: "Chat 2" },
-    { id: 3, title: "Chat 3" },
-  ]);
+  const [allChats, setAllChats] = useState<Chat[]>([]);
+  const [op, setOp] = useState<string | null>(null);
 
-  const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      const response = await fetch("/api/chatApi");
+      const chats = await response.json();
+      setAllChats(chats);
+    };
+
+    fetchChats();
+  }, [op]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,35 +50,41 @@ const Sidebar = ({
     };
   }, []);
 
-  const handleNewChat = () => {
-    const newTitle = prompt("Enter title for the new chat:");
-    if (newTitle) {
-      setChats([...chats, { id: chats.length + 1, title: newTitle }]);
-    }
-  };
-
-  const handleRenameChat = (id: number, event: React.MouseEvent) => {
+  const handleRenameChat = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
     const newTitle = prompt("Enter new title for the chat:");
     if (newTitle) {
-      setChats(
-        chats.map((chat) =>
-          chat.id === id ? { ...chat, title: newTitle } : chat
-        )
-      );
+      const res = await fetch("/api/chatApi", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, title: newTitle }),
+      });
     }
+    setOp("Rename");
     setDropdownOpen(null);
   };
 
-  const handleDeleteChat = (id: number, event: React.MouseEvent) => {
+  const handleDeleteChat = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    setChats(chats.filter((chat) => chat.id !== id));
+    const confirmation = confirm("Are you sure you want to delete this chat?");
+    if (confirmation) {
+      const res = await fetch("/api/chatApi", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+    }
+    setOp("Delete");
     setDropdownOpen(null);
   };
 
   return (
     <div
-      className={`md:h-auto h-full z-20 md:relative absolute top-0 left-0 w-80 bg-zinc-900 border-r border-zinc-700 ${
+      className={`md:h-screen h-full z-20 md:relative absolute top-0 left-0 w-80 bg-zinc-900 border-r border-zinc-700 ${
         isOpen ? "flex" : "hidden"
       } flex-col`}
       ref={sidebarRef}
@@ -72,7 +92,7 @@ const Sidebar = ({
       <div className="flex items-center justify-between p-[19px]">
         <h1 className="text-lg font-semibold text-white">Chats</h1>
         <div className="flex items-center gap-3">
-          <button onClick={handleNewChat}>
+          <button onClick={() => redirect("/chat")}>
             <PlusIcon className="w-7 h-7 text-white" />
           </button>
           <button onClick={() => setIsOpen(false)}>
@@ -80,9 +100,10 @@ const Sidebar = ({
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
-        {chats.map((chat) => (
-          <div
+      <div className="flex-1 overflow-y-auto mb-16">
+        {allChats.map((chat) => (
+          <a
+            onClick={() => redirect(`/chat/${chat.id}`)}
             key={chat.id}
             className="flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer"
           >
@@ -116,8 +137,16 @@ const Sidebar = ({
                 </div>
               )}
             </div>
-          </div>
+          </a>
         ))}
+      </div>
+      <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
+        <h1 className="text-lg font-semibold text-white">Pricing</h1>
+        <div className="flex items-center gap-3">
+          <button onClick={() => redirect("/pricing")}>
+            <BarChart className="w-7 h-7 text-white" />
+          </button>
+        </div>
       </div>
     </div>
   );
