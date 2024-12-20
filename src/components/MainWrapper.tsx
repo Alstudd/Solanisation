@@ -14,57 +14,46 @@ const MainWrapper = ({
   chat: Chat & { messages: MessageModel[] };
   initialMessages: Message[];
 }) => {
-  const { messages, handleInputChange, input, setInput, handleSubmit, isLoading } =
-    useChat({
-      api: "/api/chatStream",
-      body: {
-        chatId: chat.id,
-      },
-      initialMessages,
-    });
+  const {
+    messages,
+    handleInputChange,
+    input,
+    setInput,
+    handleSubmit,
+    isLoading,
+  } = useChat({
+    api: "/api/chatStream",
+    body: {
+      chatId: chat.id,
+    },
+    initialMessages,
+  });
 
-  console.log(messages);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    setIsOpen(window.innerWidth > 768);
   }, []);
 
   useEffect(() => {
-    setScreenWidth(window.innerWidth);
-  }, []);
+    if (window.innerWidth > 768 || !isOpen) return;
 
-  useEffect(() => {
-    setIsOpen(screenWidth > 768);
-  }, [screenWidth]);
-
-  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node) &&
-        screenWidth <= 768
+        !sidebarRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
     };
-
-    if (screenWidth > 768 || !isOpen) return;
 
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, screenWidth]);
+  }, [isOpen]);
 
   return (
     <div className="flex min-h-full relative">

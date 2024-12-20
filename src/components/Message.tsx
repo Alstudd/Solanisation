@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Bot, User } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface MessageProps {
@@ -9,11 +10,12 @@ interface MessageProps {
 }
 
 export const Message = ({ content, isUserMessage }: MessageProps) => {
+  const sanitizedContent = content.replace(/`([^`]+)`\./g, "`$1`");
+
   return (
     <div
       className={cn({
         "bg-zinc-800": true,
-        // "bg-zinc-800": !isUserMessage,
       })}
     >
       <div className="p-6">
@@ -64,14 +66,74 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
                   li: ({ node, ...props }) => {
                     return <li {...props} className="mt-1" />;
                   },
+                  code: ({ node, inline, className, children, ...props }) => {
+                    return (
+                      <div className="my-2">
+                        <CodeBlock
+                          inline={inline}
+                          className={className}
+                          content={String(children)}
+                          {...props}
+                        />
+                      </div>
+                    );
+                  },
                 }}
               >
-                {content}
+                {sanitizedContent}
               </ReactMarkdown>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const CodeBlock = ({
+  inline,
+  className,
+  content,
+  ...props
+}: {
+  inline?: boolean;
+  className?: string;
+  content: string;
+}) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(content).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  if (inline) {
+    return (
+      <code
+        {...props}
+        className={`bg-zinc-950 text-white px-1 py-0.5 rounded`}
+      >
+        {content}
+      </code>
+    );
+  }
+
+  return (
+    <div className="relative group">
+      <pre
+        {...props}
+        className={`bg-zinc-950 text-white p-4 rounded-lg overflow-x-auto break-words max-w-full`}
+      >
+        <code className={`${className} whitespace-pre-wrap`}>{content}</code>
+      </pre>
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 bg-zinc-600 text-white px-2 py-1 text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        {copied ? "Copied!" : "Copy"}
+      </button>
     </div>
   );
 };

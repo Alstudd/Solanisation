@@ -25,27 +25,23 @@ export const ChatInput = ({
   isLoading,
   type,
 }: ChatInputProps) => {
+
   return (
     <div className="z-10 bg-zinc-800 absolute bottom-0 left-0 w-full">
-      <div className="mx-2 flex flex-row gap-3 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+      <div className="mx-2 flex flex-row gap-3 md:mx-auto md:max-w-lg md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
         <div className="relative flex h-full flex-1 items-stretch md:flex-col">
-          <div className="relative flex flex-col w-full flex-grow p-4">
-            <form onSubmit={handleSubmit} className="relative">
+          <div className="relative flex flex-col w-full flex-grow p-1 mb-4 mx-4 bg-zinc-900 rounded-xl shadow-current shadow-sm backdrop-blur-xl backdrop-saturate-200">
+            <form onSubmit={handleSubmit} className="">
               <Textarea
                 variant="bordered"
                 classNames={{
                   inputWrapper: [
-                    "shadow-xl",
-                    "bg-zinc-900",
-                    "backdrop-blur-xl",
-                    "backdrop-saturate-200",
-                    "hover:bg-zinc-900",
-                    "group-data-[focus=true]:bg-zinc-900",
                     "!cursor-text",
                     "!border-transparent",
                   ],
                 }}
                 minRows={4}
+                maxRows={7}
                 autoFocus
                 onChange={handleInputChange}
                 value={input}
@@ -57,7 +53,7 @@ export const ChatInput = ({
                   }
                 }}
                 placeholder="Enter your question..."
-                className="resize-none rounded-xl text-base shadow-current shadow-sm"
+                className="resize-none text-base"
                 disabled={isLoading}
               />
 
