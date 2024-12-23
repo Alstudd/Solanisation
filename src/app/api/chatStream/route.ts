@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
+const summarize = (text: string) => {
+  return text.length > 20 ? text.slice(0, 20) + "..." : text;
+}
+
 export const POST = async (req: NextRequest) => {
   try {
     const { messages, chatId } = await req.json();
@@ -12,14 +16,14 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     if (!chatId) {
+      const lastMessage = messages[messages.length - 1]
+      console.log("lastMessage", lastMessage);
       const newChat = await prisma.chat.create({
         data: {
-          title: "New Chat",
+          title: summarize(lastMessage),
           userId,
         },
       });
-      const lastMessage = messages[messages.length - 1]
-      console.log("lastMessage", lastMessage);
       await prisma.message.create({
         data: {
           role: "user",

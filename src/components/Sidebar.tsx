@@ -8,7 +8,7 @@ import {
   BarChart,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const Sidebar = ({
   sidebarRef,
@@ -23,6 +23,7 @@ const Sidebar = ({
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -110,7 +111,7 @@ const Sidebar = ({
         {allChats.length > 0 && allChats.map((chat) => (
           <div
             key={chat.id}
-            className="flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer"
+            className={`${pathname === `/chat/${chat.id}` ? "bg-zinc-800" : ""} flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer`}
             onClick={() => handleChatClick(chat.id)}
           >
             <span className="text-white">{chat.title}</span>
@@ -145,7 +146,7 @@ const Sidebar = ({
               )}
             </div>
           </div>
-        ))}
+        )).reverse()}
       </div>
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">

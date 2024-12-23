@@ -124,7 +124,7 @@ const CodeBlock = ({
     <div className="relative group">
       <pre
         {...props}
-        className={`bg-zinc-950 text-white p-4 rounded-lg overflow-x-auto break-words max-w-full`}
+        className={`bg-zinc-950 text-white p-4 rounded-lg overflow-x-auto whitespace-pre md:w-full sm:w-[525px] w-[225px]`}
       >
         <code className={`${className} whitespace-pre-wrap`}>{content}</code>
       </pre>

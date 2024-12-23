@@ -29,7 +29,7 @@ const MainWrapper = ({
     initialMessages,
   });
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

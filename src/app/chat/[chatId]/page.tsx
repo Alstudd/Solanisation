@@ -4,13 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { ragChat } from "@/lib/rag-chat";
 
-type Props = {
-  params: {
-    chatId: string;
-  };
-};
-
-const Page = async ({ params }: Props) => {
+const Page = async ({ params }: any) => {
   const { chatId } = await params;
   const { userId } = await auth();
   if (!userId) redirect("/");
