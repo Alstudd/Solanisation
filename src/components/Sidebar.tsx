@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import ChatTitleRenameDialog from "./ChatTitleRenameDialog";
+import ChatDeleteDialog from "./ChatDeleteDialog";
 
 const Sidebar = ({
   sidebarRef,
@@ -21,6 +23,10 @@ const Sidebar = ({
   setIsOpen: (isOpen: boolean) => void;
   initialChats: Chat[];
 }) => {
+  const [renameOpen, setRenameOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [chatTitle, setChatTitle] = useState<string>("");
+  const [id, setId] = useState<string | null>(null);
   const [allChats, setAllChats] = useState<Chat[]>(initialChats);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -44,38 +50,18 @@ const Sidebar = ({
     };
   }, []);
 
-  const handleRenameChat = async (id: string, event: React.MouseEvent) => {
+  const handleRenameOpenDialog = async (id: string, title: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    const newTitle = prompt("Enter new title for the chat:");
-    if (newTitle) {
-      await fetch("/api/chatApi", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, title: newTitle }),
-      });
-      setAllChats((prev) =>
-        prev.map((chat) =>
-          chat.id === id ? { ...chat, title: newTitle } : chat
-        )
-      );
-    }
+    setRenameOpen(true);
+    setId(id);
+    setChatTitle(title);
     setDropdownOpen(null);
   };
 
-  const handleDeleteChat = async (id: string, event: React.MouseEvent) => {
+  const handleDeleteOpenDialog = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    const confirmation = confirm("Are you sure you want to delete this chat?");
-    if (confirmation) {
-      await fetch("/api/chatApi", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
-      setAllChats((prev) => prev.filter((chat) => chat.id !== id));
-    }
-    if (pathname === `/chat/${id}`) {
-      router.push("/chat");
-    }
+    setDeleteOpen(true);
+    setId(id);
     setDropdownOpen(null);
   };
 
@@ -118,7 +104,7 @@ const Sidebar = ({
                 {pathname === `/chat/${chat.id}` && (
                   <div className="absolute left-0 w-1 h-full bg-violet-700" />
                 )}
-                <span className="text-white">{chat.title}</span>
+                <span className="text-white">{chat.title.length > 20 ? chat.title.slice(0, 20) + "..." : chat.title}</span>
                 <div className="relative">
                   <button
                     onClick={(e) => {
@@ -137,13 +123,13 @@ const Sidebar = ({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
-                        onClick={(e) => handleRenameChat(chat.id, e)}
+                        onClick={(e) => handleRenameOpenDialog(chat.id, chat.title, e)}
                         className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600"
                       >
                         Rename
                       </button>
                       <button
-                        onClick={(e) => handleDeleteChat(chat.id, e)}
+                        onClick={(e) => handleDeleteOpenDialog(chat.id, e)}
                         className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600"
                       >
                         Delete
@@ -152,8 +138,7 @@ const Sidebar = ({
                   )}
                 </div>
               </div>
-            ))
-            .reverse()}
+            ))}
       </div>
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
@@ -166,6 +151,8 @@ const Sidebar = ({
           </a>
         </div>
       </div>
+      <ChatTitleRenameDialog id={id} chatTitle={chatTitle} setAllChats={setAllChats} open={renameOpen} setOpen={setRenameOpen} />
+      <ChatDeleteDialog id={id} setAllChats={setAllChats} open={deleteOpen} setOpen={setDeleteOpen} />
     </div>
   );
 };

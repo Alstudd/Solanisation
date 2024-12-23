@@ -13,7 +13,7 @@ const Page = async ({ params }: { params: { chatId: string } }) => {
   }
 
   const chat = await prisma.chat.findUnique({
-    where: { id: chatId },
+    where: { id: chatId, userId },
     include: { messages: true },
   });
 

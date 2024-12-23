@@ -5,8 +5,7 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
 const summarize = (text: string) => {
-  const summarizedText = text.length > 20 ? text.slice(0, 20) + "..." : text
-  return summarizedText.charAt(0).toUpperCase() + summarizedText.slice(1);
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 export const POST = async (req: NextRequest) => {
