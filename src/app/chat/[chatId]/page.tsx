@@ -4,24 +4,37 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { ragChat } from "@/lib/rag-chat";
 
-const Page = async ({ params }: any) => {
-  const { chatId } = await params;
+const Page = async ({ params }: { params: { chatId: string } }) => {
+  const { chatId } = params;
   const { userId } = await auth();
-  if (!userId) redirect("/");
+
+  if (!userId) {
+    redirect("/");
+  }
+
   const chat = await prisma.chat.findUnique({
     where: { id: chatId },
     include: { messages: true },
   });
+
   if (!chat) {
     return redirect("/chat");
   }
 
-  const sessionId = userId + "--" + chatId;
-  const initialMessages = await ragChat.history.getMessages({ amount: 10000, sessionId });
+  const allChats = await prisma.chat.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  const sessionId = `${userId}--${chatId}`;
+  const initialMessages = await ragChat.history.getMessages({
+    amount: 10000,
+    sessionId,
+  });
 
   return (
     <div className="h-screen dark text-foreground bg-background">
-      <MainWrapper chat={chat} initialMessages={initialMessages} />
+      <MainWrapper chat={chat} initialMessages={initialMessages} initialChats={allChats} />
     </div>
   );
 };

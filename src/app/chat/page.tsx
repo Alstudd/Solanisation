@@ -3,6 +3,7 @@ import { ragChat } from "@/lib/rag-chat";
 import { redis } from "@/lib/redis";
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+import prisma from "@/lib/prisma";
 
 const Page = async () => {
   const { userId } = await auth();
@@ -21,9 +22,15 @@ const Page = async () => {
   //   });
   //   await redis.sadd("indexed-urls", url);
   // }
+
+  const allChats = await prisma.chat.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
     <div className="h-screen dark text-foreground bg-background">
-      <NewChatMainWrapper />
+      <NewChatMainWrapper initialChats={allChats} />
     </div>
   );
 };

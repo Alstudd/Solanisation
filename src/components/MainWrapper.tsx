@@ -7,12 +7,15 @@ import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
 import { Chat, Message as MessageModel } from "@prisma/client";
+
 const MainWrapper = ({
   chat,
   initialMessages,
+  initialChats,
 }: {
   chat: Chat & { messages: MessageModel[] };
   initialMessages: Message[];
+  initialChats: Chat[];
 }) => {
   const {
     messages,
@@ -29,11 +32,18 @@ const MainWrapper = ({
     initialMessages,
   });
 
-  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
+  const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    setIsOpen(window.innerWidth > 768);
+    const handleResize = () => {
+      setIsOpen(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -57,7 +67,12 @@ const MainWrapper = ({
 
   return (
     <div className="flex min-h-full relative">
-      <Sidebar sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Sidebar
+        sidebarRef={sidebarRef}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        initialChats={initialChats}
+      />
       <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">

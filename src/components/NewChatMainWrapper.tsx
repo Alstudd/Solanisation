@@ -8,8 +8,13 @@ import { useEffect, useRef, useState } from "react";
 import { Bot } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Messages } from "./Messages";
+import { Chat } from "@prisma/client";
 
-const NewChatMainWrapper = () => {
+const NewChatMainWrapper = ({
+  initialChats
+}: {
+  initialChats: Chat[];
+}) => {
   const { messages, handleInputChange, input, setInput } = useChat({
     api: "/api/chatStream",
     body: {
@@ -60,7 +65,14 @@ const NewChatMainWrapper = () => {
   };
 
   useEffect(() => {
-    setIsOpen(window.innerWidth > 768);
+    const handleResize = () => {
+      setIsOpen(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -84,7 +96,7 @@ const NewChatMainWrapper = () => {
 
   return (
     <div className="flex min-h-full relative">
-      <Sidebar sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Sidebar initialChats={initialChats} sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
         {/* <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">

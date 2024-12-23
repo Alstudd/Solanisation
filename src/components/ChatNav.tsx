@@ -27,7 +27,7 @@ const ChatNav = ({
         <div className="size-11 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center">
           <Bot className="size-6 text-white" />
         </div>
-        <h1 className="text-lg font-semibold text-white">Solana GPT</h1>
+        <h1 className="text-lg font-semibold text-white">SolDev GPT</h1>
       </div>
       <div className="flex items-center gap-3">
         <UserButton

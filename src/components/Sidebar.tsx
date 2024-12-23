@@ -14,26 +14,18 @@ const Sidebar = ({
   sidebarRef,
   isOpen,
   setIsOpen,
+  initialChats,
 }: {
   sidebarRef: React.RefObject<HTMLDivElement | null>;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  initialChats: Chat[];
 }) => {
-  const [allChats, setAllChats] = useState<Chat[]>([]);
+  const [allChats, setAllChats] = useState<Chat[]>(initialChats);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    const fetchChats = async () => {
-      const response = await fetch("/api/chatApi");
-      const chats = await response.json();
-      setAllChats(chats);
-    };
-
-    fetchChats();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,11 +73,16 @@ const Sidebar = ({
       });
       setAllChats((prev) => prev.filter((chat) => chat.id !== id));
     }
+    if (pathname === `/chat/${id}`) {
+      router.push("/chat");
+    }
     setDropdownOpen(null);
   };
 
   const handleChatClick = (id: string) => {
-    router.push(`/chat/${id}`);
+    if (pathname !== `/chat/${id}`) {
+      router.push(`/chat/${id}`);
+    }
   };
 
   return (
@@ -108,45 +105,55 @@ const Sidebar = ({
       </div>
 
       <div className="flex-1 overflow-y-auto mb-16">
-        {allChats.length > 0 && allChats.map((chat) => (
-          <div
-            key={chat.id}
-            className={`${pathname === `/chat/${chat.id}` ? "bg-zinc-800" : ""} flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer`}
-            onClick={() => handleChatClick(chat.id)}
-          >
-            <span className="text-white">{chat.title}</span>
-            <div className="relative">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDropdownOpen(dropdownOpen === chat.id ? null : chat.id);
-                }}
+        {allChats?.length > 0 &&
+          allChats
+            .map((chat) => (
+              <div
+                key={chat.id}
+                className={`${
+                  pathname === `/chat/${chat.id}` ? "bg-zinc-800" : ""
+                } relative flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer`}
+                onClick={() => handleChatClick(chat.id)}
               >
-                <MoreVerticalIcon className="w-5 h-5 text-white" />
-              </button>
-              {dropdownOpen === chat.id && (
-                <div
-                  ref={dropdownRef}
-                  className="z-30 absolute right-0 mt-2 w-36 bg-zinc-700 border border-zinc-600 rounded-md shadow-lg"
-                  onClick={(e) => e.stopPropagation()}
-                >
+                {pathname === `/chat/${chat.id}` && (
+                  <div className="absolute left-0 w-1 h-full bg-violet-700" />
+                )}
+                <span className="text-white">{chat.title}</span>
+                <div className="relative">
                   <button
-                    onClick={(e) => handleRenameChat(chat.id, e)}
-                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDropdownOpen(
+                        dropdownOpen === chat.id ? null : chat.id
+                      );
+                    }}
                   >
-                    Rename
+                    <MoreVerticalIcon className="w-5 h-5 text-white" />
                   </button>
-                  <button
-                    onClick={(e) => handleDeleteChat(chat.id, e)}
-                    className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600"
-                  >
-                    Delete
-                  </button>
+                  {dropdownOpen === chat.id && (
+                    <div
+                      ref={dropdownRef}
+                      className="z-30 absolute right-0 mt-2 w-36 bg-zinc-700 border border-zinc-600 rounded-md shadow-lg"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        onClick={(e) => handleRenameChat(chat.id, e)}
+                        className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600"
+                      >
+                        Rename
+                      </button>
+                      <button
+                        onClick={(e) => handleDeleteChat(chat.id, e)}
+                        className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        )).reverse()}
+              </div>
+            ))
+            .reverse()}
       </div>
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
@@ -154,9 +161,9 @@ const Sidebar = ({
           Pricing
         </a>
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push("/pricing")}>
+          <a href="/pricing">
             <BarChart className="w-7 h-7 text-white" />
-          </button>
+          </a>
         </div>
       </div>
     </div>
