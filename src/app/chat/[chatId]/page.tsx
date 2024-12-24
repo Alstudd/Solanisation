@@ -4,8 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { ragChat } from "@/lib/rag-chat";
 
-const Page = async ({ params }: { params: { chatId: string } }) => {
-  const { chatId } = await params;
+const Page = async ({ params }: { params: Promise<{ chatId: string }> }) => {
+  const chatId = (await params).chatId;
   const { userId } = await auth();
 
   if (!userId) {
@@ -34,7 +34,11 @@ const Page = async ({ params }: { params: { chatId: string } }) => {
 
   return (
     <div className="h-screen dark text-foreground bg-background">
-      <MainWrapper chat={chat} initialMessages={initialMessages} initialChats={allChats} />
+      <MainWrapper
+        chat={chat}
+        initialMessages={initialMessages}
+        initialChats={allChats}
+      />
     </div>
   );
 };
