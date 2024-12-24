@@ -25,7 +25,7 @@ const MainWrapper = ({
     handleSubmit,
     isLoading,
   } = useChat({
-    api: "/api/chatStream",
+    api: "/api/chat",
     body: {
       chatId: chat.id,
     },

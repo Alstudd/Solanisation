@@ -16,7 +16,7 @@ const NewChatMainWrapper = ({
   initialChats: Chat[];
 }) => {
   const { messages, handleInputChange, input, setInput } = useChat({
-    api: "/api/chatStream",
+    api: "/api/chat",
     body: {
       chatId: null,
     },
@@ -35,7 +35,7 @@ const NewChatMainWrapper = ({
 
     try {
       setInput("");
-      const response = await fetch("/api/chatStream", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -30,7 +30,7 @@ model SolanaData {
 
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  role      String // "user" or "ai"
+  role      String // "user" or "assistant"
   content   String
   chatId    String   @db.ObjectId
   createdAt DateTime @default(now())

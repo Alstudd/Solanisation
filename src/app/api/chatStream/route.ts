@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 
 const summarize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
-}
+};
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     if (!chatId) {
-      const lastMessage = messages[messages.length - 1]
+      const lastMessage = messages[messages.length - 1];
       console.log("lastMessage", lastMessage);
       const newChat = await prisma.chat.create({
         data: {
@@ -30,18 +30,18 @@ export const POST = async (req: NextRequest) => {
           content: lastMessage,
           chatId: newChat.id,
         },
-      })
+      });
       const response = await ragChat.chat(lastMessage, {
         sessionId: userId + "--" + newChat.id,
       });
       console.log("response", response);
       await prisma.message.create({
         data: {
-          role: "ai",
+          role: "assistant",
           content: response.output,
           chatId: newChat.id,
         },
-      })
+      });
       const redirectUrl = `/chat/${newChat.id}`;
       return NextResponse.json({ redirectUrl }, { status: 200 });
     } else {
@@ -53,21 +53,38 @@ export const POST = async (req: NextRequest) => {
           content: lastMessage,
           chatId,
         },
-      })
-      const response = await ragChat.chat(lastMessage);
-      console.log("response", response);
-      await prisma.message.create({
-        data: {
-          role: "ai",
-          content: response.output,
-          chatId,
-        },
-      })
+      });
       const streamResponse = await ragChat.chat(lastMessage, {
         streaming: true,
         sessionId: userId + "--" + chatId,
       });
-      return aiUseChatAdapter(streamResponse);
+
+      if (streamResponse.output && streamResponse.output.tee) {
+        const [streamForDb, streamForClient] = streamResponse.output.tee();
+
+        (async () => {
+          const reader = streamForDb.getReader();
+          let completeMessage = "";
+          let result;
+          while (!(result = await reader.read()).done) {
+            completeMessage += result.value;
+          }
+          await prisma.message.create({
+            data: {
+              role: "assistant",
+              content: completeMessage,
+              chatId,
+            },
+          });
+        })();
+
+        return aiUseChatAdapter({
+          output: streamForClient,
+          isStream: true,
+        });
+      } else {
+        throw new Error("Stream is not tee-able");
+      }
     }
   } catch (error: any) {
     console.log(error);

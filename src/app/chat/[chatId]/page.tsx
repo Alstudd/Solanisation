@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { ragChat } from "@/lib/rag-chat";
 
 const Page = async ({ params }: { params: { chatId: string } }) => {
-  const { chatId } = params;
+  const { chatId } = await params;
   const { userId } = await auth();
 
   if (!userId) {
