@@ -73,19 +73,19 @@ const Sidebar = ({
 
   return (
     <div
-      className={`md:h-screen h-full z-20 md:relative absolute top-0 left-0 w-80 bg-zinc-900 border-r border-zinc-700 ${
+      className={`md:h-screen h-full z-20 md:relative absolute top-0 left-0 w-80 dark:bg-zinc-900 bg-zinc-100 border-r dark:border-zinc-700 border-zinc-200 ${
         isOpen ? "flex" : "hidden"
       } flex-col`}
       ref={sidebarRef}
     >
       <div className="flex items-center justify-between p-[19px]">
-        <h1 className="text-lg font-semibold text-white">Chats</h1>
+        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">Chats</h1>
         <div className="flex items-center gap-3">
           <button onClick={() => router.push("/chat")}>
-            <PlusIcon className="w-7 h-7 text-white" />
+            <PlusIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
           <button onClick={() => setIsOpen(false)}>
-            <PanelLeftCloseIcon className="w-7 h-7 text-white" />
+            <PanelLeftCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
         </div>
       </div>
@@ -97,14 +97,14 @@ const Sidebar = ({
               <div
                 key={chat.id}
                 className={`${
-                  pathname === `/chat/${chat.id}` ? "bg-zinc-800" : ""
-                } relative flex items-center justify-between px-4 py-2 hover:bg-zinc-700 cursor-pointer`}
+                  pathname === `/chat/${chat.id}` ? "dark:bg-zinc-800 bg-white" : ""
+                } relative flex items-center justify-between px-4 py-2 dark:hover:bg-zinc-700 hover:bg-zinc-200 cursor-pointer`}
                 onClick={() => handleChatClick(chat.id)}
               >
                 {pathname === `/chat/${chat.id}` && (
                   <div className="absolute left-0 w-1 h-full bg-violet-700" />
                 )}
-                <span className="text-white">{chat.title.length > 20 ? chat.title.slice(0, 20) + "..." : chat.title}</span>
+                <span className="dark:text-white text-zinc-900">{chat.title.length > 20 ? chat.title.slice(0, 20) + "..." : chat.title}</span>
                 <div className="relative">
                   <button
                     onClick={(e) => {
@@ -114,7 +114,7 @@ const Sidebar = ({
                       );
                     }}
                   >
-                    <MoreVerticalIcon className="w-5 h-5 text-white" />
+                    <MoreVerticalIcon className="w-5 h-5 dark:text-white text-zinc-900" />
                   </button>
                   {dropdownOpen === chat.id && (
                     <div
@@ -142,12 +142,12 @@ const Sidebar = ({
       </div>
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
-        <a href="/pricing" className="text-lg font-semibold text-white">
+        <a href="/pricing" className="text-lg font-semibold dark:text-white text-zinc-900">
           Pricing
         </a>
         <div className="flex items-center gap-3">
           <a href="/pricing">
-            <BarChart className="w-7 h-7 text-white" />
+            <BarChart className="w-7 h-7 dark:text-white text-zinc-900" />
           </a>
         </div>
       </div>

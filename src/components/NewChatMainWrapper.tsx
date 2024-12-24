@@ -97,7 +97,7 @@ const NewChatMainWrapper = ({
   return (
     <div className="flex min-h-full relative">
       <Sidebar initialChats={initialChats} sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
+      <div className="w-full relative flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
         {/* <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">
           <div className="shadow-current shadow-sm size-20 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center mb-5">
@@ -118,7 +118,7 @@ const NewChatMainWrapper = ({
             To get started, type a message in the chat box below.
           </p>
         </div> */}
-        <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
+        <div className="flex-1 dark:text-white text-zinc-900 dark:bg-zinc-800 bg-white justify-between flex flex-col">
           <Messages messages={[]} />
         </div>
         <ChatInput

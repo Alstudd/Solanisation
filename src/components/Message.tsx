@@ -14,24 +14,22 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
 
   return (
     <div
-      className={cn({
-        "bg-zinc-800": true,
-      })}
+      className="dark:bg-zinc-800 bg-white"
     >
       <div className="p-6">
         <div className="max-w-3xl mx-auto flex items-start gap-2.5">
           <div
             className={cn(
-              "size-10 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center",
+              "size-10 shrink-0 aspect-square rounded-full border border-zinc-700 dark:bg-zinc-900 bg-white flex justify-center items-center",
               {
-                "bg-violet-950 border-violet-700 text-zinc-200": isUserMessage,
+                "dark:bg-violet-950 bg-violet-950 border-violet-700 text-zinc-200": isUserMessage,
               }
             )}
           >
             {isUserMessage ? (
               <User className="size-5" />
             ) : (
-              <Bot className="size-5 text-white" />
+              <Bot className="size-5 dark:text-white text-zinc-900" />
             )}
           </div>
 

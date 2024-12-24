@@ -33,7 +33,7 @@ const Page = async ({ params }: { params: Promise<{ chatId: string }> }) => {
   });
 
   return (
-    <div className="h-screen dark text-foreground bg-background">
+    <div className="h-screen">
       <MainWrapper
         chat={chat}
         initialMessages={initialMessages}

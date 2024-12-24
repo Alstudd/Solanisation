@@ -73,9 +73,9 @@ const MainWrapper = ({
         setIsOpen={setIsOpen}
         initialChats={initialChats}
       />
-      <div className="w-full relative bg-zinc-800 flex flex-col justify-between">
+      <div className="w-full relative dark:bg-zinc-800 bg-white flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
+        <div className="flex-1 text-black dark:bg-zinc-800 bg-white justify-between flex flex-col">
           <Messages messages={messages} />
         </div>
         <ChatInput

@@ -18,7 +18,7 @@ export const Messages = ({ messages }: MessagesProps) => {
     }
   }, [messages]);
   return (
-    <div className={`flex max-h-[calc(100vh-3.5rem-10rem)] flex-1 flex-col overflow-y-auto`} ref={scrollRef}>
+    <div className={`flex max-h-[calc(100vh-3.5rem-12rem)] flex-1 flex-col overflow-y-auto`} ref={scrollRef}>
       {messages.length ? (
         messages.map((message, i) => (
           <Message
@@ -30,7 +30,7 @@ export const Messages = ({ messages }: MessagesProps) => {
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center gap-2 mx-auto p-10">
           <Bot className="size-8 text-violet-500" />
-          <h3 className="font-semibold text-xl text-white text-center">
+          <h3 className="font-semibold text-xl text-center">
             Welcome to Solanisation for Solana Devs
           </h3>
           <p className="text-zinc-500 text-sm text-center">

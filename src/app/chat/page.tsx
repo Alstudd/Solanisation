@@ -29,7 +29,7 @@ const Page = async () => {
   });
 
   return (
-    <div className="h-screen dark text-foreground bg-background">
+    <div className="h-screen">
       <NewChatMainWrapper initialChats={allChats} />
     </div>
   );
