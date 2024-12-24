@@ -25,10 +25,12 @@ const ChatNav = ({
             <PanelRightCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
         )}
-        <div className="size-11 shrink-0 aspect-square rounded-full border border-zinc-700 dark:bg-white bg-zinc-900 flex justify-center items-center">
-          <Bot className="size-6 dark:text-zinc-900 text-white" />
+        <div className="size-10 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center">
+          <Bot className="size-6 text-white" />
         </div>
-        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">Solanisation</h1>
+        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">
+          Solanisation
+        </h1>
       </div>
       <div className="flex items-center gap-3">
         <ThemeToggleButton />
@@ -36,7 +38,7 @@ const ChatNav = ({
           afterSignOutUrl="/"
           appearance={{
             // baseTheme: theme === "dark" ? dark : undefined,
-            elements: { avatarBox: { width: "2.3rem", height: "2.3rem" } },
+            elements: { avatarBox: { width: "2.25rem", height: "2.25rem" } },
           }}
         />
       </div>

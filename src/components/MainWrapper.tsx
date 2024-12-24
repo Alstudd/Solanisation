@@ -17,6 +17,10 @@ const MainWrapper = ({
   initialMessages: Message[];
   initialChats: Chat[];
 }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const [model, setModel] = useState<"standard" | "advanced">("standard");
+
   const {
     messages,
     handleInputChange,
@@ -25,15 +29,12 @@ const MainWrapper = ({
     handleSubmit,
     isLoading,
   } = useChat({
-    api: "/api/chat",
+    api: model === "standard" ? "/api/standardChat" : "/api/advancedChat",
     body: {
       chatId: chat.id,
     },
     initialMessages,
   });
-
-  const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
-  const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,6 +80,8 @@ const MainWrapper = ({
           <Messages messages={messages} />
         </div>
         <ChatInput
+          model={model}
+          setModel={setModel}
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}

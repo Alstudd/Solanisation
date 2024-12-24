@@ -10,22 +10,20 @@ import { useRouter } from "next/navigation";
 import { Messages } from "./Messages";
 import { Chat } from "@prisma/client";
 
-const NewChatMainWrapper = ({
-  initialChats
-}: {
-  initialChats: Chat[];
-}) => {
-  const { messages, handleInputChange, input, setInput } = useChat({
-    api: "/api/chat",
-    body: {
-      chatId: null,
-    },
-  });
-
+const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const [model, setModel] = useState<"standard" | "advanced">("standard");
+  const [modelSelected, setModelSelected] = useState<boolean>(false);
+
+  const { messages, handleInputChange, input, setInput } = useChat({
+    api: model === "standard" ? "/api/standardChat" : "/api/advancedChat",
+    body: {
+      chatId: null,
+    },
+  });
 
   const handleSubmit = async (e?: any) => {
     if (e) e.preventDefault();
@@ -35,16 +33,19 @@ const NewChatMainWrapper = ({
 
     try {
       setInput("");
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [tempInput],
-          chatId: null,
-        }),
-      });
+      const response = await fetch(
+        model === "standard" ? "/api/standardChat" : "/api/advancedChat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [tempInput],
+            chatId: null,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json();
@@ -96,7 +97,12 @@ const NewChatMainWrapper = ({
 
   return (
     <div className="flex min-h-full relative">
-      <Sidebar initialChats={initialChats} sidebarRef={sidebarRef} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Sidebar
+        initialChats={initialChats}
+        sidebarRef={sidebarRef}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <div className="w-full relative flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
         {/* <div className="flex-1 flex flex-col items-center justify-center p-10 mb-36">
@@ -119,9 +125,11 @@ const NewChatMainWrapper = ({
           </p>
         </div> */}
         <div className="flex-1 dark:text-white text-zinc-900 dark:bg-zinc-800 bg-white justify-between flex flex-col">
-          <Messages messages={[]} />
+          <Messages setModel={setModel} messages={[]} />
         </div>
         <ChatInput
+          model={model}
+          setModel={setModel}
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}

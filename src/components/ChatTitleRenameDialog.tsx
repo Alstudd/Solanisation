@@ -59,7 +59,9 @@ export default function ChatTitleRenameDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="bg-zinc-900 border-none text-white">
+      <DialogContent style={{
+        borderRadius: '10px',
+      }} className="dark:bg-zinc-900 bg-white border-none dark:text-white text-zinc-900">
         <DialogHeader>
           <DialogTitle>Rename Chat Title</DialogTitle>
         </DialogHeader>
@@ -76,7 +78,7 @@ export default function ChatTitleRenameDialog({
                   <FormLabel>Chat title</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-zinc-800 text-white border-zinc-700 focus:border-violet-700 focus:ring-violet-700 my-4"
+                      className="rounded-xl dark:bg-zinc-800 bg-zinc-100 dark:text-white text-zinc-900 border-zinc-700 focus:border-violet-700 focus:ring-violet-700 my-4"
                       placeholder="Chat title"
                       {...field}
                     />
@@ -87,7 +89,7 @@ export default function ChatTitleRenameDialog({
             />
             <DialogFooter className="gap-1 sm:gap-0">
               <LoadingButton
-                className="border bg-violet-950 border-violet-700 hover:bg-violet-800 shadow-current shadow-sm"
+                className="dark:text-white text-white rounded-xl border dark:bg-violet-950 bg-violet-700 border-violet-700 hover:bg-violet-800 shadow-current shadow-sm"
                 type="submit"
                 loading={form.formState.isSubmitting}
               >

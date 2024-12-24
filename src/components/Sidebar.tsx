@@ -119,18 +119,18 @@ const Sidebar = ({
                   {dropdownOpen === chat.id && (
                     <div
                       ref={dropdownRef}
-                      className="z-30 absolute right-0 mt-2 w-36 bg-zinc-700 border border-zinc-600 rounded-md shadow-lg"
+                      className="z-30 absolute right-0 mt-2 w-36 bg-zinc-700 border border-zinc-600 rounded-xl shadow-lg"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
                         onClick={(e) => handleRenameOpenDialog(chat.id, chat.title, e)}
-                        className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600"
+                        className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600 rounded-t-xl"
                       >
                         Rename
                       </button>
                       <button
                         onClick={(e) => handleDeleteOpenDialog(chat.id, e)}
-                        className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600"
+                        className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600 rounded-b-xl"
                       >
                         Delete
                       </button>

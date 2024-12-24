@@ -21,7 +21,7 @@ export default function ThemeToggleButton() {
       size="icon"
       className={`rounded-full relative ${
         resolvedTheme === "dark"
-          ? "bg-white hover:bg-gray-300"
+          ? "bg-zinc-900 hover:bg-zinc-800"
           : "bg-zinc-900 hover:bg-zinc-800"
       } border-zinc-700`}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
@@ -32,7 +32,7 @@ export default function ThemeToggleButton() {
             resolvedTheme === "dark"
               ? "rotate-0 scale-100 opacity-100"
               : "-rotate-90 scale-0 opacity-0"
-          } text-zinc-900 mt-[1px] ml-[1px]`}
+          } text-white mt-[1px] ml-[1px]`}
         />
         <Moon
           className={`absolute transition-transform duration-500 ease-in-out ${

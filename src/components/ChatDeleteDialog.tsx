@@ -49,7 +49,9 @@ export default function ChatDeleteDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="bg-zinc-900 border-none text-white">
+      <DialogContent style={{
+        borderRadius: '10px',
+      }} className="dark:bg-zinc-900 bg-white border-none dark:text-white text-zinc-900">
         <DialogHeader>
           <DialogTitle>Delete Chat</DialogTitle>
         </DialogHeader>
@@ -61,8 +63,7 @@ export default function ChatDeleteDialog({
             Are you sure you want to delete this chat?
             <DialogFooter className="gap-1 sm:gap-0">
               <LoadingButton
-                className="shadow-current shadow-sm"
-                variant="destructive"
+                className="dark:text-white text-white rounded-xl border dark:bg-red-950 bg-red-700 border-red-700 hover:bg-red-800 shadow-current shadow-sm"
                 type="submit"
                 loading={form.formState.isSubmitting}
               >
