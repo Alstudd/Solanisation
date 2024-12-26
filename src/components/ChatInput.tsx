@@ -2,7 +2,6 @@
 
 import { Button, Textarea } from "@nextui-org/react";
 import { Loader2, Send, Repeat } from "lucide-react";
-import { useEffect, useState } from "react";
 import { type useChat } from "ai/react";
 
 type HandleInputChange = ReturnType<typeof useChat>["handleInputChange"];

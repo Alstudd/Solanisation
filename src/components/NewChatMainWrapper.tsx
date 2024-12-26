@@ -16,7 +16,6 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
   const [isOpen, setIsOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [model, setModel] = useState<"standard" | "advanced">("standard");
-  const [modelSelected, setModelSelected] = useState<boolean>(false);
 
   const { messages, handleInputChange, input, setInput } = useChat({
     api: model === "standard" ? "/api/standardChat" : "/api/advancedChat",
@@ -56,7 +55,11 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
       const data = await response.json();
 
       if (data.redirectUrl) {
-        router.push(data.redirectUrl);
+        if (model === "standard") {
+          router.push(`${data.redirectUrl}`);
+        } else {
+          router.push(`${data.redirectUrl}?model=${model}`);
+        }
       }
     } catch (error) {
       console.error("Error submitting chat:", error);

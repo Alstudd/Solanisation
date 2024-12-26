@@ -8,7 +8,6 @@ import { useEffect, useRef } from "react";
 interface MessagesProps {
   messages: TMessage[];
   setModel?: (model: "standard" | "advanced") => void;
-  setModelSelected?: (selected: boolean) => void;
 }
 
 export const Messages = ({ messages, setModel }: MessagesProps) => {

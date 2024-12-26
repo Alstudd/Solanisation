@@ -26,20 +26,20 @@ export default function ThemeToggleButton() {
       } border-zinc-700`}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
-      <div className="relative h-[1.2rem] w-[1.2rem]">
+      <div className="relative h-[1.3rem] w-[1.2rem]">
         <Sun
           className={`absolute transition-transform duration-500 ease-in-out ${
             resolvedTheme === "dark"
               ? "rotate-0 scale-100 opacity-100"
               : "-rotate-90 scale-0 opacity-0"
-          } text-white mt-[1px] ml-[1px]`}
+          } text-white mt-[2px] ml-[2px]`}
         />
         <Moon
           className={`absolute transition-transform duration-500 ease-in-out ${
             resolvedTheme === "dark"
               ? "rotate-90 scale-0 opacity-0"
               : "rotate-0 scale-100 opacity-100"
-          } text-white mt-[1px] ml-[1px]`}
+          } text-white mt-[2px] ml-[2px]`}
         />
       </div>
       <span className="sr-only">Toggle theme</span>

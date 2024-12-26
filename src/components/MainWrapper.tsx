@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
 import { Chat, Message as MessageModel } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 
 const MainWrapper = ({
   chat,
@@ -17,9 +18,12 @@ const MainWrapper = ({
   initialMessages: Message[];
   initialChats: Chat[];
 }) => {
+  const initialModel = useSearchParams().get("model");
   const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
-  const [model, setModel] = useState<"standard" | "advanced">("standard");
+  const [model, setModel] = useState<"standard" | "advanced">(
+    initialModel === "advanced" ? "advanced" : "standard"
+  );
 
   const {
     messages,

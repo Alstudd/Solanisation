@@ -22,7 +22,7 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
             className={cn(
               "size-10 shrink-0 aspect-square rounded-full border border-zinc-700 dark:bg-zinc-900 bg-white flex justify-center items-center",
               {
-                "dark:bg-violet-950 bg-violet-950 border-violet-700 text-zinc-200": isUserMessage,
+                "dark:bg-violet-950 bg-violet-700 border-violet-700 text-zinc-200": isUserMessage,
               }
             )}
           >
