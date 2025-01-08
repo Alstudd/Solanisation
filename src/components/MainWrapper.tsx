@@ -22,7 +22,7 @@ const MainWrapper = ({
   const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [model, setModel] = useState<"standard" | "advanced">(
-    initialModel === "advanced" ? "advanced" : "standard"
+    initialModel === "standard" ? "standard" : "advanced"
   );
 
   const {

@@ -15,7 +15,7 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
-  const [model, setModel] = useState<"standard" | "advanced">("standard");
+  const [model, setModel] = useState<"standard" | "advanced">("advanced");
 
   const { messages, handleInputChange, input, setInput } = useChat({
     api: model === "standard" ? "/api/standardChat" : "/api/advancedChat",
@@ -55,7 +55,7 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
       const data = await response.json();
 
       if (data.redirectUrl) {
-        if (model === "standard") {
+        if (model === "advanced") {
           router.push(`${data.redirectUrl}`);
         } else {
           router.push(`${data.redirectUrl}?model=${model}`);
