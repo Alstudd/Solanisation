@@ -6,16 +6,17 @@ import Sidebar from "./Sidebar";
 import ChatNav from "./ChatNav";
 import { useEffect, useRef, useState } from "react";
 import { Bot } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Messages } from "./Messages";
 import { Chat } from "@prisma/client";
 
 const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
+  const initialModel = useSearchParams().get("model");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
-  const [model, setModel] = useState<"standard" | "advanced">("advanced");
+  const [model, setModel] = useState<"standard" | "advanced">(initialModel === "standard" ? "standard" : "advanced");
 
   const { messages, handleInputChange, input, setInput } = useChat({
     api: model === "standard" ? "/api/standardChat" : "/api/advancedChat",

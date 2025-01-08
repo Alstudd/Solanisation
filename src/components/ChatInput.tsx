@@ -3,6 +3,7 @@
 import { Button, Textarea } from "@nextui-org/react";
 import { Loader2, Send, Repeat } from "lucide-react";
 import { type useChat } from "ai/react";
+import { useRouter } from "next/navigation";
 
 type HandleInputChange = ReturnType<typeof useChat>["handleInputChange"];
 type HandleSubmit = ReturnType<typeof useChat>["handleSubmit"];
@@ -32,6 +33,7 @@ export const ChatInput = ({
   const toggleModel = () => {
     setModel(model === "standard" ? "advanced" : "standard");
   };
+  const router = useRouter();
 
   return (
     <div className="z-10 dark:bg-zinc-800 bg-white absolute bottom-0 left-0 w-full">
@@ -44,14 +46,28 @@ export const ChatInput = ({
             </span>
           </span>
           <button
-            onClick={toggleModel}
+            onClick={
+              type === "newChat"
+                ? toggleModel
+                : () =>
+                    router.push(
+                      `/chat${model === "advanced" ? "?model=standard" : ""}`
+                    )
+            }
             className="dark:shadow-current dark:shadow-sm sm:flex hidden items-center px-3 py-2 text-sm font-medium text-white bg-violet-700 rounded-xl shadow-md dark:bg-violet-950 hover:bg-violet-800 dark:hover:bg-violet-800"
           >
             <Repeat className="w-4 h-4 mr-2" />
             Switch to {model === "standard" ? "Advanced" : "Standard"}
           </button>
           <button
-            onClick={toggleModel}
+            onClick={
+              type === "newChat"
+                ? toggleModel
+                : () =>
+                    router.push(
+                      `/chat${model === "advanced" ? "?model=standard" : ""}`
+                    )
+            }
             className="dark:shadow-current dark:shadow-sm sm:hidden flex items-center px-3 py-2 text-sm font-medium text-white bg-violet-700 rounded-xl shadow-md dark:bg-violet-950 hover:bg-violet-800 dark:hover:bg-violet-800"
           >
             <Repeat className="w-4 h-4 mr-2" />
