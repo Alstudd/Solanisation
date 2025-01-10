@@ -14,7 +14,7 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
   const initialModel = useSearchParams().get("model");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [model, setModel] = useState<"standard" | "advanced">(initialModel === "standard" ? "standard" : "advanced");
 

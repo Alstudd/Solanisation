@@ -25,7 +25,7 @@ const ChatNav = ({
             <PanelRightCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
         )}
-        <div className="size-10 shrink-0 aspect-square rounded-full border border-zinc-700 bg-zinc-900 flex justify-center items-center">
+        <div className="size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
           <Bot className="size-6 text-white" />
         </div>
         <h1 className="text-lg font-semibold dark:text-white text-zinc-900">

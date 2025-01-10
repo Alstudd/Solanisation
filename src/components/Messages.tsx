@@ -34,7 +34,9 @@ export const Messages = ({ messages, setModel }: MessagesProps) => {
         ))
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center gap-6 mx-auto p-10">
-          <Bot className="h-12 w-12 text-violet-500" />
+          <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
+            <Bot className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
+          </div>
           <h3 className="font-semibold text-xl text-center">
             Welcome to Solanisation for Solana Devs
           </h3>
@@ -45,7 +47,7 @@ export const Messages = ({ messages, setModel }: MessagesProps) => {
           <div className="flex items-center justify-center gap-6 mt-0 lg:w-[70%] w-full">
             {/* Standard Model Card */}
             <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
-              <h4 className="text-center text-lg font-bold text-gray-700 dark:text-white">
+              <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
                 Standard Model
               </h4>
               <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -62,7 +64,7 @@ export const Messages = ({ messages, setModel }: MessagesProps) => {
 
             {/* Advanced Model Card */}
             <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
-              <h4 className="text-center text-lg font-bold text-gray-700 dark:text-white">
+              <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
                 Advanced Model
               </h4>
               <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
