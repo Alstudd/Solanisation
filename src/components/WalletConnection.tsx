@@ -93,9 +93,9 @@ const WalletConnection = () => {
           <Wallet className="transition-transform duration-200 hover:scale-110 size-5 text-white" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72 mt-2 mr-2 z-40 dark:bg-zinc-800 bg-white">
+      <DropdownMenuContent className="w-72 mt-2 mr-2 z-40 dark:bg-zinc-900 bg-white border border-gray-300 rounded-xl">
         {!connected ? (
-          <div className="border-0 shadow-none rounded-lg p-4 bg-white dark:bg-zinc-800">
+          <div className="border-0 shadow-none p-4">
             <div className="pb-2">
               <h3 className="text-lg font-semibold">Connect Wallet</h3>
               <p className="text-sm text-gray-500">
@@ -125,14 +125,14 @@ const WalletConnection = () => {
             </div>
           </div>
         ) : (
-          <div className="border-0 shadow-none rounded-lg p-4 bg-white dark:bg-zinc-800">
+          <div className="border-0 shadow-none p-4">
             <div className="pb-2 flex items-center justify-between">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <span>{getWalletIcon(wallet?.adapter.name || "")}</span>
                 {wallet?.adapter.name}
               </h3>
               <button
-                className="h-8 px-3 text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900 rounded-md transition"
+                className="h-8 px-3 text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-950 rounded-md transition"
                 onClick={disconnect}
               >
                 Disconnect
