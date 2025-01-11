@@ -22,7 +22,7 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center flex-1 min-h-0 pt-14 pb-40 overflow-y-auto`}
+      className={`flex flex-col items-center flex-1 min-h-0 ${messages.length ? "justify-start overflow-y-auto pt-14 pb-40" : "justify-center overflow-y-hidden pt-0 pb-20"}`}
       ref={scrollRef}
     >
       <div
@@ -30,7 +30,7 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
           isOpen ? "md:ml-[260px]" : ""
         }`}
       >
-        <div className="px-4 lg:w-[750px] w-full mx-auto">
+        <div className="lg:w-[750px] w-full mx-auto">
           {messages.length ? (
             messages.map((message, i) => (
               <Message
@@ -63,7 +63,7 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
                   </p>
                   <button
                     onClick={() => setModel && setModel("standard")}
-                    className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
+                    className="transition-transform duration-200 hover:scale-105 mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
                   >
                     Select
                   </button>
@@ -80,7 +80,7 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
                   </p>
                   <button
                     onClick={() => setModel && setModel("advanced")}
-                    className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
+                    className="transition-transform duration-200 hover:scale-105 mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
                   >
                     Select
                   </button>

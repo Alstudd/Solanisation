@@ -37,7 +37,7 @@ export const ChatInput = ({
   const router = useRouter();
 
   return (
-    <div className="z-10 dark:bg-zinc-800 bg-white fixed bottom-0 left-0 w-full">
+    <div className="z-10 dark:bg-zinc-800 bg-white fixed bottom-0 left-0 w-full pt-2">
       <div
         className={`flex flex-col ${
           isOpen ? "md:ml-[260px]" : ""
@@ -60,7 +60,7 @@ export const ChatInput = ({
                         `/chat${model === "advanced" ? "?model=standard" : ""}`
                       )
               }
-              className="dark:shadow-current dark:shadow-sm sm:flex hidden items-center px-3 py-2 text-sm font-medium text-white bg-violet-700 rounded-xl shadow-md dark:bg-violet-950 hover:bg-violet-800 dark:hover:bg-violet-800"
+              className="transition-transform duration-200 hover:scale-105 dark:shadow-current dark:shadow-sm sm:flex hidden items-center px-3 py-2 text-sm font-medium text-white rounded-xl shadow-md border dark:bg-violet-950 bg-violet-700 border-violet-700"
             >
               <Repeat className="w-4 h-4 mr-2" />
               Switch to {model === "standard" ? "Advanced" : "Standard"}
@@ -74,7 +74,7 @@ export const ChatInput = ({
                         `/chat${model === "advanced" ? "?model=standard" : ""}`
                       )
               }
-              className="dark:shadow-current dark:shadow-sm sm:hidden flex items-center px-3 py-2 text-sm font-medium text-white bg-violet-700 rounded-xl shadow-md dark:bg-violet-950 hover:bg-violet-800 dark:hover:bg-violet-800"
+              className="transition-transform duration-200 hover:scale-105 dark:shadow-current dark:shadow-sm sm:hidden flex items-center px-3 py-2 text-sm font-medium text-white rounded-xl shadow-md border dark:bg-violet-950 bg-violet-700 border-violet-700"
             >
               <Repeat className="w-4 h-4 mr-2" />
               {model === "standard" ? "Advanced" : "Standard"}
@@ -111,7 +111,7 @@ export const ChatInput = ({
                   disabled={isLoading}
                   className={`${
                     type === "newChat" && "animate-bounce"
-                  } dark:shadow-current dark:shadow-sm shadow-none absolute z-10 border dark:bg-violet-950 bg-violet-700 border-violet-700 right-2 bottom-2`}
+                  } dark:shadow-current dark:shadow-sm shadow-md absolute z-10 border dark:bg-violet-950 bg-violet-700 border-violet-700 right-2 bottom-2`}
                 >
                   {isLoading ? (
                     <Loader2 className="size-4 animate-spin text-white" />
