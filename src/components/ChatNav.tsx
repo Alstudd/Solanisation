@@ -10,32 +10,38 @@ const ChatNav = ({
   setIsOpen: (isOpen: boolean) => void;
 }) => {
   return (
-    <div className="flex items-center justify-between px-5 h-[4rem] dark:bg-zinc-800 bg-white">
-      {!isOpen && (
-        <div className="md:hidden flex gap-3">
-          <button onClick={() => setIsOpen(true)}>
-            <Menu className="w-7 h-7 dark:text-white text-zinc-900" />
-          </button>
-          <h1 className="text-xl font-semibold dark:text-white text-zinc-900">
+    <div className="fixed z-20 right-0 left-0 flex items-center justify-between px-5 h-[4rem] dark:bg-zinc-800 bg-white md:ml-0">
+      <div
+        className={`flex items-center ${
+          isOpen ? "md:ml-[260px]" : ""
+        } transition-all duration-300`}
+      >
+        {!isOpen && (
+          <div className="md:hidden flex gap-3">
+            <button onClick={() => setIsOpen(true)}>
+              <Menu className="w-7 h-7 dark:text-white text-zinc-900" />
+            </button>
+            <h1 className="text-xl font-semibold dark:text-white text-zinc-900">
+              Solanisation
+            </h1>
+          </div>
+        )}
+        <div className="flex items-center gap-3">
+          {!isOpen && (
+            <button
+              className="md:block hidden mr-0 transition-transform duration-200 hover:scale-110"
+              onClick={() => setIsOpen(true)}
+            >
+              <PanelRightCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
+            </button>
+          )}
+          <div className="md:flex hidden size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 justify-center items-center">
+            <Bot className="size-6 text-white" />
+          </div>
+          <h1 className="md:block hidden text-xl font-semibold dark:text-white text-zinc-900">
             Solanisation
           </h1>
         </div>
-      )}
-      <div className="flex items-center gap-3">
-        {!isOpen && (
-          <button
-            className="md:block hidden mr-0 transition-transform duration-200 hover:scale-110"
-            onClick={() => setIsOpen(true)}
-          >
-            <PanelRightCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
-          </button>
-        )}
-        <div className="md:flex hidden size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 justify-center items-center">
-          <Bot className="size-6 text-white" />
-        </div>
-        <h1 className="md:block hidden text-xl font-semibold dark:text-white text-zinc-900">
-          Solanisation
-        </h1>
       </div>
       <div className="flex items-center gap-3">
         <button
@@ -48,7 +54,6 @@ const ChatNav = ({
         <UserButton
           afterSignOutUrl="/"
           appearance={{
-            // baseTheme: theme === "dark" ? dark : undefined,
             elements: { avatarBox: { width: "2.25rem", height: "2.25rem" } },
           }}
         />

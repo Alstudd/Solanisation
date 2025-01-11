@@ -81,13 +81,13 @@ const Sidebar = ({
   return (
     <div
       className={`
-        fixed md:relative top-0 left-0 h-full md:h-screen z-20
+        fixed top-0 left-0 h-full md:h-screen z-40
         dark:bg-zinc-900 bg-zinc-100
         border-r dark:border-zinc-700 border-zinc-200
         transform transition-all duration-300 ease-in-out
         ${
           isOpen
-            ? "w-80 translate-x-0 opacity-100"
+            ? "w-[260px] translate-x-0 opacity-100"
             : "w-0 -translate-x-full opacity-0"
         }
         flex flex-col overflow-hidden

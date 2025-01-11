@@ -78,10 +78,10 @@ const MainWrapper = ({
         setIsOpen={setIsOpen}
         initialChats={initialChats}
       />
-      <div className="w-full relative dark:bg-zinc-800 bg-white flex flex-col justify-between">
+      <div className="w-full relative flex flex-col justify-between">
         <ChatNav isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div className="flex-1 text-black dark:bg-zinc-800 bg-white justify-between flex flex-col">
-          <Messages messages={messages} />
+        <div className="flex-1 dark:text-white text-zinc-900 dark:bg-zinc-800 bg-white justify-between flex flex-col">
+          <Messages messages={messages} isOpen={isOpen}  />
         </div>
         <ChatInput
           model={model}
@@ -92,6 +92,7 @@ const MainWrapper = ({
           setInput={setInput}
           isLoading={isLoading}
           type={"chat"}
+          isOpen={isOpen}
         />
       </div>
     </div>

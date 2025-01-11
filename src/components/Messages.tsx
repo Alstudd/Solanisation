@@ -8,9 +8,10 @@ import { useEffect, useRef } from "react";
 interface MessagesProps {
   messages: TMessage[];
   setModel?: (model: "standard" | "advanced") => void;
+  isOpen: boolean;
 }
 
-export const Messages = ({ messages, setModel }: MessagesProps) => {
+export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,66 +22,74 @@ export const Messages = ({ messages, setModel }: MessagesProps) => {
 
   return (
     <div
-      className={`flex max-h-[calc(100vh-3.5rem-12rem)] flex-1 flex-col overflow-y-auto`}
+      className={`flex flex-col items-center justify-center flex-1 min-h-0 pt-14 pb-40 overflow-y-auto`}
       ref={scrollRef}
     >
-      {messages.length ? (
-        messages.map((message, i) => (
-          <Message
-            key={i}
-            content={message.content}
-            isUserMessage={message.role === "user"}
-          />
-        ))
-      ) : (
-        <div className="flex-1 flex flex-col items-center justify-center gap-6 mx-auto p-10">
-          <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
-            <Bot className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
-          </div>
-          <h3 className="font-semibold text-xl text-center">
-            Welcome to Solanisation for Solana Devs
-          </h3>
-          <p className="text-zinc-500 text-sm text-center">
-            Ask me anything about Solana and I will provide you with the best
-            answer.
-          </p>
-          <div className="flex items-center justify-center gap-6 mt-0 lg:w-[70%] w-full">
-            {/* Standard Model Card */}
-            <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
-              <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
-                Standard Model
-              </h4>
-              <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Fast, short and efficient answers for your Solana development
-                queries.
+      <div
+        className={`transition-all duration-300 ${
+          isOpen ? "md:ml-[260px]" : ""
+        }`}
+      >
+        <div className="px-4 lg:w-[750px] w-full mx-auto">
+          {messages.length ? (
+            messages.map((message, i) => (
+              <Message
+                key={i}
+                content={message.content}
+                isUserMessage={message.role === "user"}
+              />
+            ))
+          ) : (
+            <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
+              <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
+                <Bot className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
+              </div>
+              <h3 className="font-semibold text-xl text-center">
+                Welcome to Solanisation for Solana Devs
+              </h3>
+              <p className="text-zinc-500 text-sm text-center">
+                Ask me anything about Solana and I will provide you with the
+                best answer.
               </p>
-              <button
-                onClick={() => setModel && setModel("standard")}
-                className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
-              >
-                Select
-              </button>
-            </div>
+              <div className="flex items-center justify-center gap-6 mt-0 w-full">
+                {/* Standard Model Card */}
+                <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
+                  <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
+                    Standard Model
+                  </h4>
+                  <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    Fast, short and efficient answers for your Solana
+                    development queries.
+                  </p>
+                  <button
+                    onClick={() => setModel && setModel("standard")}
+                    className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
+                  >
+                    Select
+                  </button>
+                </div>
 
-            {/* Advanced Model Card */}
-            <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
-              <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
-                Advanced Model
-              </h4>
-              <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Detailed, in-depth and practical answers for your Solana
-                development queries.
-              </p>
-              <button
-                onClick={() => setModel && setModel("advanced")}
-                className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
-              >
-                Select
-              </button>
+                {/* Advanced Model Card */}
+                <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl bg-white dark:bg-zinc-900">
+                  <h4 className="text-center text-sm sm:text-md md:text-lg font-bold text-gray-700 dark:text-white">
+                    Advanced Model
+                  </h4>
+                  <p className="text-center sm:block hidden text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    Detailed and practical answers for your Solana development
+                    queries.
+                  </p>
+                  <button
+                    onClick={() => setModel && setModel("advanced")}
+                    className="mt-4 px-4 py-2 text-sm font-medium text-white border dark:bg-violet-950 bg-violet-700 border-violet-700 rounded-[10px] dark:shadow-current dark:shadow-sm shadow-none"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

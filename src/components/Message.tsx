@@ -22,14 +22,14 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
             className={cn(
               "size-10 shrink-0 aspect-square rounded-full border border-zinc-700 dark:bg-zinc-900 bg-white flex justify-center items-center",
               {
-                "dark:bg-violet-950 bg-violet-700 border-violet-700 text-zinc-200": isUserMessage,
+                "dark:bg-violet-950 bg-violet-700 border-violet-700 text-zinc-200": !isUserMessage,
               }
             )}
           >
             {isUserMessage ? (
-              <User className="size-5" />
+              <User className="size-5 dark:text-white text-zinc-900" />
             ) : (
-              <Bot className="size-5 dark:text-white text-zinc-900" />
+              <Bot className="size-5" />
             )}
           </div>
 

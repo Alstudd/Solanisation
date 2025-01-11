@@ -129,7 +129,7 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
           </p>
         </div> */}
         <div className="flex-1 dark:text-white text-zinc-900 dark:bg-zinc-800 bg-white justify-between flex flex-col">
-          <Messages setModel={setModel} messages={[]} />
+          <Messages setModel={setModel} messages={[]} isOpen={isOpen} />
         </div>
         <ChatInput
           model={model}
@@ -140,6 +140,7 @@ const NewChatMainWrapper = ({ initialChats }: { initialChats: Chat[] }) => {
           setInput={setInput}
           isLoading={isLoading}
           type={"newChat"}
+          isOpen={isOpen}
         />
       </div>
     </div>
