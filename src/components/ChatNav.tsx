@@ -1,6 +1,8 @@
 import { UserButton } from "@clerk/nextjs";
 import { Bot, Menu, PanelRightCloseIcon, Wallet } from "lucide-react";
 import ThemeToggleButton from "./ThemeToggleButton";
+import WalletConnection from "./WalletConnection";
+import { useState } from "react";
 
 const ChatNav = ({
   isOpen,
@@ -44,12 +46,7 @@ const ChatNav = ({
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <button
-          onClick={() => {}}
-          className="size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center"
-        >
-          <Wallet className="transition-transform duration-200 hover:scale-110 size-5 text-white" />
-        </button>
+        <WalletConnection />
         <ThemeToggleButton />
         <UserButton
           afterSignOutUrl="/"

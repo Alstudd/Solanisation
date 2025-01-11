@@ -24,7 +24,7 @@ export default async function Home() {
         anything Solana. Click the button below to start chatting.
       </p>
       <Link href="/sign-in">
-        <button className="dark:shadow-current dark:shadow-sm shadow-none px-4 py-2 rounded-[10px] border dark:bg-violet-950 bg-violet-700 border-violet-700">
+        <button className="dark:shadow-current dark:shadow-sm shadow-none px-4 py-2 rounded-[10px] border dark:bg-violet-950 bg-violet-700 border-violet-700 text-white">
           Login
         </button>
       </Link>

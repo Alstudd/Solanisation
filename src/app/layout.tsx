@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Providers } from "@/components/Providers";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "./ThemeProvider";
+import MainWalletProvider from "@/components/MainWalletProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={cn(inter.className, "min-h-screen antialiased")}>
           <Providers>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>{children}</ThemeProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <MainWalletProvider>
+                {children}
+              </MainWalletProvider>
+            </ThemeProvider>
           </Providers>
         </body>
       </html>

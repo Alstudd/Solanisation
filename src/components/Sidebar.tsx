@@ -81,7 +81,7 @@ const Sidebar = ({
   return (
     <div
       className={`
-        fixed top-0 left-0 h-full md:h-screen z-40
+        fixed top-0 left-0 h-full md:h-screen z-30
         dark:bg-zinc-900 bg-zinc-100
         border-r dark:border-zinc-700 border-zinc-200
         transform transition-all duration-300 ease-in-out
@@ -134,7 +134,7 @@ const Sidebar = ({
               {pathname === `/chat/${chat.id}` && (
                 <div className="absolute left-0 w-1 h-full bg-violet-700" />
               )}
-              <span className="dark:text-white text-zinc-900">
+              <span className="select-none dark:text-white text-zinc-900">
                 {chat.title.length > 20
                   ? chat.title.slice(0, 20) + "..."
                   : chat.title}
