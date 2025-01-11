@@ -1,5 +1,5 @@
 import { UserButton } from "@clerk/nextjs";
-import { Bot, Menu, PanelRightCloseIcon } from "lucide-react";
+import { Bot, Menu, PanelRightCloseIcon, Wallet } from "lucide-react";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 const ChatNav = ({
@@ -12,27 +12,38 @@ const ChatNav = ({
   return (
     <div className="flex items-center justify-between px-5 h-[4rem] dark:bg-zinc-800 bg-white">
       {!isOpen && (
-        <button className="md:hidden block" onClick={() => setIsOpen(true)}>
-          <Menu className="w-7 h-7 dark:text-white text-zinc-900" />
-        </button>
+        <div className="md:hidden flex gap-3">
+          <button onClick={() => setIsOpen(true)}>
+            <Menu className="w-7 h-7 dark:text-white text-zinc-900" />
+          </button>
+          <h1 className="text-xl font-semibold dark:text-white text-zinc-900">
+            Solanisation
+          </h1>
+        </div>
       )}
       <div className="flex items-center gap-3">
         {!isOpen && (
           <button
-            className="md:block hidden mr-0"
+            className="md:block hidden mr-0 transition-transform duration-200 hover:scale-110"
             onClick={() => setIsOpen(true)}
           >
             <PanelRightCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
         )}
-        <div className="size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
+        <div className="md:flex hidden size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 justify-center items-center">
           <Bot className="size-6 text-white" />
         </div>
-        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">
+        <h1 className="md:block hidden text-xl font-semibold dark:text-white text-zinc-900">
           Solanisation
         </h1>
       </div>
       <div className="flex items-center gap-3">
+        <button
+          onClick={() => {}}
+          className="size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center"
+        >
+          <Wallet className="transition-transform duration-200 hover:scale-110 size-5 text-white" />
+        </button>
         <ThemeToggleButton />
         <UserButton
           afterSignOutUrl="/"

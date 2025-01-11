@@ -50,7 +50,11 @@ const Sidebar = ({
     };
   }, []);
 
-  const handleRenameOpenDialog = async (id: string, title: string, event: React.MouseEvent) => {
+  const handleRenameOpenDialog = async (
+    id: string,
+    title: string,
+    event: React.MouseEvent
+  ) => {
     event.stopPropagation();
     setRenameOpen(true);
     setId(id);
@@ -58,7 +62,10 @@ const Sidebar = ({
     setDropdownOpen(null);
   };
 
-  const handleDeleteOpenDialog = async (id: string, event: React.MouseEvent) => {
+  const handleDeleteOpenDialog = async (
+    id: string,
+    event: React.MouseEvent
+  ) => {
     event.stopPropagation();
     setDeleteOpen(true);
     setId(id);
@@ -73,18 +80,35 @@ const Sidebar = ({
 
   return (
     <div
-      className={`md:h-screen h-full z-20 md:relative absolute top-0 left-0 w-80 dark:bg-zinc-900 bg-zinc-100 border-r dark:border-zinc-700 border-zinc-200 ${
-        isOpen ? "flex" : "hidden"
-      } flex-col`}
+      className={`
+        fixed md:relative top-0 left-0 h-full md:h-screen z-20
+        dark:bg-zinc-900 bg-zinc-100
+        border-r dark:border-zinc-700 border-zinc-200
+        transform transition-all duration-300 ease-in-out
+        ${
+          isOpen
+            ? "w-80 translate-x-0 opacity-100"
+            : "w-0 -translate-x-full opacity-0"
+        }
+        flex flex-col overflow-hidden
+      `}
       ref={sidebarRef}
     >
       <div className="flex items-center justify-between p-[19px]">
-        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">Chats</h1>
+        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">
+          Chats
+        </h1>
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push("/chat")}>
+          <button
+            onClick={() => router.push("/chat")}
+            className="transition-transform duration-200 hover:scale-110"
+          >
             <PlusIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
-          <button onClick={() => setIsOpen(false)}>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="transition-transform duration-200 hover:scale-110"
+          >
             <PanelLeftCloseIcon className="w-7 h-7 dark:text-white text-zinc-900" />
           </button>
         </div>
@@ -92,67 +116,96 @@ const Sidebar = ({
 
       <div className="flex-1 overflow-y-auto mb-16">
         {allChats?.length > 0 &&
-          allChats
-            .map((chat) => (
-              <div
-                key={chat.id}
-                className={`${
-                  pathname === `/chat/${chat.id}` ? "dark:bg-zinc-800 bg-white" : ""
-                } relative flex items-center justify-between px-4 py-2 dark:hover:bg-zinc-700 hover:bg-zinc-200 cursor-pointer`}
-                onClick={() => handleChatClick(chat.id)}
-              >
-                {pathname === `/chat/${chat.id}` && (
-                  <div className="absolute left-0 w-1 h-full bg-violet-700" />
-                )}
-                <span className="dark:text-white text-zinc-900">{chat.title.length > 20 ? chat.title.slice(0, 20) + "..." : chat.title}</span>
-                <div className="relative">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDropdownOpen(
-                        dropdownOpen === chat.id ? null : chat.id
-                      );
-                    }}
+          allChats.map((chat) => (
+            <div
+              key={chat.id}
+              className={`
+                relative flex items-center justify-between px-4 py-2
+                cursor-pointer transition-colors duration-200
+                ${
+                  pathname === `/chat/${chat.id}`
+                    ? "dark:bg-zinc-800 bg-white"
+                    : ""
+                }
+                dark:hover:bg-zinc-700 hover:bg-zinc-200
+              `}
+              onClick={() => handleChatClick(chat.id)}
+            >
+              {pathname === `/chat/${chat.id}` && (
+                <div className="absolute left-0 w-1 h-full bg-violet-700" />
+              )}
+              <span className="dark:text-white text-zinc-900">
+                {chat.title.length > 20
+                  ? chat.title.slice(0, 20) + "..."
+                  : chat.title}
+              </span>
+              <div className="relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDropdownOpen(dropdownOpen === chat.id ? null : chat.id);
+                  }}
+                  className="transition-transform duration-200 hover:scale-110"
+                >
+                  <MoreVerticalIcon className="w-5 h-5 dark:text-white text-zinc-900" />
+                </button>
+                {dropdownOpen === chat.id && (
+                  <div
+                    ref={dropdownRef}
+                    className="z-30 absolute right-0 mt-2 w-36 dark:bg-zinc-700 bg-white border dark:border-zinc-600 border-zinc-200 rounded-xl shadow-lg
+                    transform transition-all duration-200 origin-top-right"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <MoreVerticalIcon className="w-5 h-5 dark:text-white text-zinc-900" />
-                  </button>
-                  {dropdownOpen === chat.id && (
-                    <div
-                      ref={dropdownRef}
-                      className="z-30 absolute right-0 mt-2 w-36 bg-zinc-700 border border-zinc-600 rounded-xl shadow-lg"
-                      onClick={(e) => e.stopPropagation()}
+                    <button
+                      onClick={(e) =>
+                        handleRenameOpenDialog(chat.id, chat.title, e)
+                      }
+                      className="w-full text-left px-4 py-2 text-sm dark:text-white text-zinc-900 dark:hover:bg-zinc-600 hover:bg-zinc-200 rounded-t-xl transition-colors duration-200"
                     >
-                      <button
-                        onClick={(e) => handleRenameOpenDialog(chat.id, chat.title, e)}
-                        className="w-full text-left px-4 py-2 text-sm text-white hover:bg-zinc-600 rounded-t-xl"
-                      >
-                        Rename
-                      </button>
-                      <button
-                        onClick={(e) => handleDeleteOpenDialog(chat.id, e)}
-                        className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-zinc-600 rounded-b-xl"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </div>
+                      Rename
+                    </button>
+                    <button
+                      onClick={(e) => handleDeleteOpenDialog(chat.id, e)}
+                      className="w-full text-left px-4 py-2 text-sm text-red-500 dark:hover:bg-zinc-600 hover:bg-zinc-200 rounded-b-xl transition-colors duration-200"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
+          ))}
       </div>
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
-        <a href="/pricing" className="text-lg font-semibold dark:text-white text-zinc-900">
+        <a
+          href="/pricing"
+          className="text-lg font-semibold dark:text-white text-zinc-900 transition-colors duration-200 hover:text-violet-700"
+        >
           Pricing
         </a>
         <div className="flex items-center gap-3">
-          <a href="/pricing">
+          <a
+            href="/pricing"
+            className="transition-transform duration-200 hover:scale-110"
+          >
             <BarChart className="w-7 h-7 dark:text-white text-zinc-900" />
           </a>
         </div>
       </div>
-      <ChatTitleRenameDialog id={id} chatTitle={chatTitle} setAllChats={setAllChats} open={renameOpen} setOpen={setRenameOpen} />
-      <ChatDeleteDialog id={id} setAllChats={setAllChats} open={deleteOpen} setOpen={setDeleteOpen} />
+      <ChatTitleRenameDialog
+        id={id}
+        chatTitle={chatTitle}
+        setAllChats={setAllChats}
+        open={renameOpen}
+        setOpen={setRenameOpen}
+      />
+      <ChatDeleteDialog
+        id={id}
+        setAllChats={setAllChats}
+        open={deleteOpen}
+        setOpen={setDeleteOpen}
+      />
     </div>
   );
 };
