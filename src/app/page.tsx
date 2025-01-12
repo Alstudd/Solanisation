@@ -10,7 +10,7 @@ export default async function Home() {
   if (userId) redirect("/chat");
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-5">
+    <main className="dark:bg-zinc-900 bg-white flex h-screen flex-col items-center justify-center gap-5">
       <div className="flex items-center gap-4">
         <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
           <Bot className="h-8 w-8 sm:h-12 sm:w-12 text-white" />

@@ -95,7 +95,7 @@ const Sidebar = ({
       ref={sidebarRef}
     >
       <div className="flex items-center justify-between p-[19px]">
-        <h1 className="text-lg font-semibold dark:text-white text-zinc-900">
+        <h1 className="select-none text-lg font-semibold dark:text-white text-zinc-900">
           Chats
         </h1>
         <div className="flex items-center gap-3">
@@ -180,7 +180,7 @@ const Sidebar = ({
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
         <a
           href="/pricing"
-          className="text-lg font-semibold dark:text-white text-zinc-900 transition-colors duration-200 hover:text-violet-700"
+          className="select-none text-lg font-semibold dark:text-white text-zinc-900 transition-colors duration-200 hover:text-violet-700"
         >
           Pricing
         </a>
