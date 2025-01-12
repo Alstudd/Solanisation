@@ -19,7 +19,7 @@ const MainWrapper = ({
   initialChats: Chat[];
 }) => {
   const initialModel = useSearchParams().get("model");
-  const [isOpen, setIsOpen] = useState<boolean>(window.innerWidth > 768);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [model, setModel] = useState<"standard" | "advanced">(
     initialModel === "standard" ? "standard" : "advanced"
@@ -39,6 +39,10 @@ const MainWrapper = ({
     },
     initialMessages,
   });
+
+  useEffect(() => {
+    window.innerWidth > 768 ? setIsOpen(true) : setIsOpen(false);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {

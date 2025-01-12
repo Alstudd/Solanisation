@@ -8,8 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Wallet, ExternalLink, Copy, Check, Loader2 } from "lucide-react";
+import { useGlobalContext } from "@/contexts/GlobalContextProvider";
 
 const WalletConnection = () => {
+  const { setGlobalWalletAddress } = useGlobalContext();
   const { connection } = useConnection();
   const {
     publicKey,
@@ -25,6 +27,10 @@ const WalletConnection = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setGlobalWalletAddress(publicKey?.toString() || "");
+  }, [publicKey, setGlobalWalletAddress]);
 
   useEffect(() => {
     const fetchBalance = async () => {
