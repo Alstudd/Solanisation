@@ -23,8 +23,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <GlobalContextProvider>
-        <html lang="en" suppressHydrationWarning>
-          <body className={cn(inter.className, "min-h-screen antialiased")} suppressHydrationWarning>
+        <html lang="en">
+          <body className={cn(inter.className, "min-h-screen antialiased")}>
             <Providers>
               <ThemeProvider
                 attribute="class"
