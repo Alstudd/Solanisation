@@ -10,19 +10,20 @@ interface MessageProps {
 }
 
 export const Message = ({ content, isUserMessage }: MessageProps) => {
-  const sanitizedContent = content.replace(/`([^`]+)`\./g, "`$1`");
+  const sanitizedContent = content
+    .replace(/\n{3,}/g, "\n\n") // Replace 3 or more newlines with 2
+    .replace(/(?<!`)`([^`]+)`(?!`)/g, "$1"); // Remove single backticks while preserving text
 
   return (
-    <div
-      className="dark:bg-zinc-800 bg-white"
-    >
+    <div className="dark:bg-zinc-800 bg-white">
       <div className="p-6">
         <div className="max-w-3xl mx-auto flex items-start gap-2.5">
           <div
             className={cn(
               "size-10 shrink-0 aspect-square rounded-full border border-zinc-700 dark:bg-zinc-900 bg-white flex justify-center items-center",
               {
-                "dark:bg-violet-950 bg-violet-700 border-violet-700 text-zinc-200": !isUserMessage,
+                "dark:bg-violet-950 bg-violet-700 border-violet-700 text-zinc-200":
+                  !isUserMessage,
               }
             )}
           >
@@ -109,10 +110,7 @@ const CodeBlock = ({
 
   if (inline) {
     return (
-      <code
-        {...props}
-        className={`bg-zinc-950 text-white px-1 py-0.5 rounded`}
-      >
+      <code {...props} className={`bg-zinc-950 text-white px-1 py-0.5 rounded`}>
         {content}
       </code>
     );

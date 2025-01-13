@@ -12,18 +12,21 @@ interface MessagesProps {
 }
 
 export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
   return (
     <div
-      className={`flex flex-col items-center flex-1 min-h-0 ${messages.length ? "justify-start overflow-y-auto pt-14 pb-40" : "justify-center overflow-y-hidden pt-0 pb-20"}`}
-      ref={scrollRef}
+      className={`flex flex-col items-center flex-1 min-h-0 ${
+        messages.length
+          ? "justify-start overflow-y-auto pt-14 pb-40"
+          : "justify-center overflow-y-hidden pt-0 pb-20"
+      }`}
     >
       <div
         className={`transition-all duration-300 ${
@@ -32,13 +35,16 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
       >
         <div className="lg:w-[750px] w-full mx-auto">
           {messages.length ? (
-            messages.map((message, i) => (
-              <Message
-                key={i}
-                content={message.content}
-                isUserMessage={message.role === "user"}
-              />
-            ))
+            <>
+              {messages.map((message, i) => (
+                <Message
+                  key={i}
+                  content={message.content}
+                  isUserMessage={message.role === "user"}
+                />
+              ))}
+              <div ref={bottomRef} />
+            </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
               <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
