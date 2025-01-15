@@ -10,6 +10,7 @@ import { X } from "lucide-react";
 import Navbar from "./Navbar";
 import Link from "next/link";
 import { AnimatedListComponent } from "./AnimatedListComponent";
+import Footer from "./Footer";
 
 const slugs = [
   // Blockchain & Crypto
@@ -201,6 +202,7 @@ export function LandingPage() {
         </div>
         <AnimatedListComponent />
       </div>
+      <Footer />
     </>
   );
 }
