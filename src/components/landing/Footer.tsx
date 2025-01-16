@@ -8,7 +8,7 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer className="border-t border-solid border-violet-900 text-gray-300 py-6 px-24">
+    <footer className="border-t border-solid dark:border-white border-black dark:text-white text-black py-6 px-24">
       <div className="container mx-auto flex sm:flex-row flex-col gap-4 items-center justify-between">
         <div className="sm:flex hidden items-center gap-1">
           <Slide direction="down" duration={500} cascade>
