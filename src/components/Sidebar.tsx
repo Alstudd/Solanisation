@@ -179,14 +179,14 @@ const Sidebar = ({
 
       <div className="absolute bottom-0 w-full flex items-center justify-between p-[19px]">
         <a
-          href="/pricing"
+          href="#"
           className="select-none text-lg font-semibold dark:text-white text-zinc-900 transition-colors duration-200 hover:text-violet-700"
         >
           Pricing
         </a>
         <div className="flex items-center gap-3">
           <a
-            href="/pricing"
+            href="#"
             className="transition-transform duration-200 hover:scale-110"
           >
             <BarChart className="w-7 h-7 dark:text-white text-zinc-900" />
