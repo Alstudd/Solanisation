@@ -47,8 +47,14 @@ export const Messages = ({ messages, setModel, isOpen }: MessagesProps) => {
             </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
-              <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
+              {/* <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
                 <Bot className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
+              </div> */}
+              <div className="h-[56px] w-[56px] sm:h-[72px] sm:w-[72px] shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 flex justify-center items-center">
+                <img
+                  src="/logo.png"
+                  className="h-12 w-16 sm:h-16 sm:w-24 text-white"
+                />
               </div>
               <h3 className="font-semibold text-xl text-center">
                 Welcome to Solanisation for Solana Devs

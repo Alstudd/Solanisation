@@ -38,7 +38,7 @@ const ChatNav = ({
             </button>
           )}
           <div className="md:flex hidden size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 justify-center items-center">
-            <Bot className="size-6 text-white" />
+            <img src="/logo.png" className="h-[30px] w-[36px] text-white" />
           </div>
           <h1 className="md:block hidden text-xl font-semibold dark:text-white text-zinc-900">
             Solanisation

@@ -14,7 +14,7 @@ const Navbar = () => {
             className="flex items-center space-x-3 text-white rtl:space-x-reverse"
           >
             <div className="flex size-10 shrink-0 aspect-square rounded-full dark:shadow-current dark:shadow-sm shadow-none border dark:bg-violet-950 bg-violet-700 border-violet-700 justify-center items-center">
-              <Bot className="size-6 text-white" />
+              <img src="/logo.png" className="h-[30px] w-[36px] text-white" />
             </div>
             <div className="py-auto">
               <span

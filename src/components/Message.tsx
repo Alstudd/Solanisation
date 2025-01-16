@@ -112,7 +112,7 @@ const CodeBlock = ({
     return (
       <code
         {...props}
-        className={`dark:bg-zinc-950 bg-zinc-100 dark:text-white text-zinc-900 px-1 py-0.5 rounded-[7px]`}
+        className={`dark:bg-zinc-950 bg-zinc-100 dark:text-white text-zinc-900 px-1 py-0.5 rounded-[px]`}
       >
         {content}
       </code>
@@ -123,13 +123,13 @@ const CodeBlock = ({
     <div className="relative group">
       <pre
         {...props}
-        className={`dark:bg-zinc-950 bg-zinc-100 dark:text-white text-zinc-900 p-4 rounded-[7px] overflow-x-auto whitespace-pre md:w-full sm:w-[525px] w-[225px]`}
+        className={`dark:bg-zinc-950 bg-zinc-100 dark:text-white text-zinc-900 p-4 rounded-[px] overflow-x-auto whitespace-pre md:w-full sm:w-[525px] w-[225px]`}
       >
         <code className={`${className} whitespace-pre-wrap`}>{content}</code>
       </pre>
       <button
         onClick={handleCopy}
-        className="absolute top-2 right-2 dark:bg-zinc-800 bg-white dark:text-white text-zinc-900 px-2 py-1 text-xs rounded-[7px] opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute top-2 right-2 dark:bg-zinc-800 bg-white dark:text-white text-zinc-900 px-2 py-1 text-xs rounded-[px] opacity-0 group-hover:opacity-100 transition-opacity"
       >
         {copied ? "Copied!" : "Copy"}
       </button>
