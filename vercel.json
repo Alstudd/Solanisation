@@ -2,6 +2,9 @@
   "functions": {
     "src/app/api/advancedChat/route.ts": {
       "maxDuration": 60
+    },
+    "src/app/api/standardChat/route.ts": {
+      "maxDuration": 60
     }
   }
 }
